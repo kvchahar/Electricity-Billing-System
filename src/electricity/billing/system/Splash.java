@@ -46,6 +46,9 @@ public class Splash extends JFrame implements Runnable {
         try {
             Thread.sleep(7000);
             setVisible(false); // frame will be closed after 7 seconds.
+
+            // login frame
+            new Login(); // and login frame will be displaying there.
         } catch (Exception e) {
             e.printStackTrace();
         }
