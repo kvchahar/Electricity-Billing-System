@@ -1,5 +1,7 @@
 package electricity.billing.system;
 
+import electricity.database.Conn;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -10,6 +12,9 @@ import java.awt.event.ActionListener;
 public class Signup extends JFrame implements ActionListener {
 
     JButton create, back;
+    Choice accountType;
+    JTextField meter, usernameTextField, nameTextField, passwordTextField;
+
 
     public Signup() {
         setBounds(450, 150, 700, 400);
@@ -32,7 +37,7 @@ public class Signup extends JFrame implements ActionListener {
         panel.add(heading); // add on panel
 
         // account type
-        Choice accountType = new Choice();
+        accountType = new Choice();
         accountType.add("Admin");
         accountType.add("Customer");
         accountType.setBounds(260, 50, 150, 20);
@@ -45,7 +50,7 @@ public class Signup extends JFrame implements ActionListener {
         meterNumber.setFont(new Font("Tahoma", Font.BOLD, 15));
         panel.add(meterNumber); // add on panel
 
-        JTextField meter = new JTextField();
+        meter = new JTextField();
         meter.setBounds(260, 90, 150, 20);
         panel.add(meter);
 
@@ -56,7 +61,7 @@ public class Signup extends JFrame implements ActionListener {
         username.setFont(new Font("Tahoma", Font.BOLD, 15));
         panel.add(username); // add on panel
 
-        JTextField usernameTextField = new JTextField();
+        usernameTextField = new JTextField();
         usernameTextField.setBounds(260, 130, 150, 20);
         panel.add(usernameTextField);
 
@@ -67,7 +72,7 @@ public class Signup extends JFrame implements ActionListener {
         name.setFont(new Font("Tahoma", Font.BOLD, 15));
         panel.add(name); // add on panel
 
-        JTextField nameTextField = new JTextField();
+        nameTextField = new JTextField();
         nameTextField.setBounds(260, 170, 150, 20);
         panel.add(nameTextField);
         setVisible(true);
@@ -80,7 +85,7 @@ public class Signup extends JFrame implements ActionListener {
         password.setFont(new Font("Tahoma", Font.BOLD, 15));
         panel.add(password); // add on panel
 
-        JTextField passwordTextField = new JTextField();
+        passwordTextField = new JTextField();
         passwordTextField.setBounds(260, 210, 150, 20);
         panel.add(passwordTextField);
 
@@ -112,7 +117,22 @@ public class Signup extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == create) {
+            String accType = accountType.getSelectedItem();
+            String username = usernameTextField.getText();
+            String name = nameTextField.getText();
+            String password = passwordTextField.getText();
+            String meterField = meter.getText();
 
+            try {
+                Conn con = new Conn();
+                String query = "INSERT INTO login VALUES('" + meterField + "','" + username + "','" + name + "','" + password + "','" + accType + "')";
+                con.statement.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Account Created Successfully \nClick Ok to go to login page");
+                setVisible(false);
+                new Login();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         } else if (e.getSource() == back) {
             setVisible(false);
             new Login(); // back to login page
