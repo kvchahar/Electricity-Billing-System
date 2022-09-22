@@ -2,8 +2,12 @@ package electricity.billing.system;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
+
+    JButton login, cancel, signup;
 
     public Login() {
         super("Login Page"); // title name
@@ -43,23 +47,26 @@ public class Login extends JFrame {
         // login button
         ImageIcon loginImage = new ImageIcon(ClassLoader.getSystemResource("icon/login.png"));
         Image scaleLoginImage = loginImage.getImage().getScaledInstance(16, 16, Image.SCALE_DEFAULT);
-        JButton logIn = new JButton("Login", new ImageIcon(scaleLoginImage));
-        logIn.setBounds(330, 160, 100, 20);
-        add(logIn);
+        login = new JButton("Login", new ImageIcon(scaleLoginImage));
+        login.setBounds(330, 160, 100, 20);
+        login.addActionListener(this);
+        add(login);
 
         // cancel button
         ImageIcon cancelImage = new ImageIcon(ClassLoader.getSystemResource("icon/cancel.jpg"));
         Image scaleCancelImage = cancelImage.getImage().getScaledInstance(16, 16, Image.SCALE_DEFAULT);
-        JButton cancel = new JButton("Cancel", new ImageIcon(scaleCancelImage));
+        cancel = new JButton("Cancel", new ImageIcon(scaleCancelImage));
         cancel.setBounds(450, 160, 100, 20);
+        cancel.addActionListener(this);
         add(cancel);
 
-        // signUp button
+        // signup button
         ImageIcon signupImage = new ImageIcon(ClassLoader.getSystemResource("icon/signup.png"));
         Image scaleSignupImage = signupImage.getImage().getScaledInstance(16, 16, Image.SCALE_DEFAULT);
-        JButton signUp = new JButton("Signup", new ImageIcon(scaleSignupImage));
-        signUp.setBounds(380, 200, 100, 20);
-        add(signUp);
+        signup = new JButton("Signup", new ImageIcon(scaleSignupImage));
+        signup.setBounds(380, 200, 100, 20);
+        signup.addActionListener(this);
+        add(signup);
 
         // Human image
         ImageIcon humanImage = new ImageIcon(ClassLoader.getSystemResource("icon/second.jpg"));
@@ -75,7 +82,23 @@ public class Login extends JFrame {
         setVisible(true);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == login) {
+
+            // cancel the login frame
+        } else if (e.getSource() == cancel) {
+            setVisible(false);
+            // cancel the login frame and call Signup constructor to open that file.
+        } else if (e.getSource() == signup) {
+            setVisible(false);
+            new Signup();
+        }
+    }
+
     public static void main(String[] args) {
         new Login();
     }
+
+
 }

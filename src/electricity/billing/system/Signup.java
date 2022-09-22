@@ -4,8 +4,13 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Signup extends JFrame {
+public class Signup extends JFrame implements ActionListener {
+
+    JButton create, back;
+
     public Signup() {
         setBounds(450, 150, 700, 400);
         getContentPane().setBackground(Color.WHITE);
@@ -30,7 +35,7 @@ public class Signup extends JFrame {
         Choice accountType = new Choice();
         accountType.add("Admin");
         accountType.add("Customer");
-        accountType.setBounds(260,50,150,20);
+        accountType.setBounds(260, 50, 150, 20);
         panel.add(accountType);
 
         // meter number
@@ -41,7 +46,7 @@ public class Signup extends JFrame {
         panel.add(meterNumber); // add on panel
 
         JTextField meter = new JTextField();
-        meter.setBounds(260,90,150,20);
+        meter.setBounds(260, 90, 150, 20);
         panel.add(meter);
 
         // username
@@ -52,7 +57,7 @@ public class Signup extends JFrame {
         panel.add(username); // add on panel
 
         JTextField usernameTextField = new JTextField();
-        usernameTextField.setBounds(260,130,150,20);
+        usernameTextField.setBounds(260, 130, 150, 20);
         panel.add(usernameTextField);
 
         // Name
@@ -63,7 +68,7 @@ public class Signup extends JFrame {
         panel.add(name); // add on panel
 
         JTextField nameTextField = new JTextField();
-        nameTextField.setBounds(260,170,150,20);
+        nameTextField.setBounds(260, 170, 150, 20);
         panel.add(nameTextField);
         setVisible(true);
 
@@ -76,33 +81,47 @@ public class Signup extends JFrame {
         panel.add(password); // add on panel
 
         JTextField passwordTextField = new JTextField();
-        passwordTextField.setBounds(260,210,150,20);
+        passwordTextField.setBounds(260, 210, 150, 20);
         panel.add(passwordTextField);
 
-        JButton create = new JButton("Create");
+        create = new JButton("Create");
         create.setBackground(Color.BLACK);
         create.setForeground(Color.WHITE);
-        create.setBounds(140,260,120,25);
+        create.setBounds(140, 260, 120, 25);
+        create.addActionListener(this);
         panel.add(create);
 
-        JButton back = new JButton("Back");
+        back = new JButton("Back");
         back.setBackground(Color.BLACK);
         back.setForeground(Color.WHITE);
-        back.setBounds(300,260,120,25);
+        back.setBounds(300, 260, 120, 25);
+        back.addActionListener(this);
         panel.add(back);
 
         // Signup image
         ImageIcon signupImage = new ImageIcon(ClassLoader.getSystemResource("icon/signupImage.png"));
-        Image scaleSignupImage = signupImage.getImage().getScaledInstance(250,250,Image.SCALE_DEFAULT);
+        Image scaleSignupImage = signupImage.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT);
         ImageIcon image = new ImageIcon(scaleSignupImage);
         JLabel finalImage = new JLabel(image);
-        finalImage.setBounds(345,30,250,250);
+        finalImage.setBounds(415, 30, 250, 250);
         panel.add(finalImage);
 
         setVisible(true);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == create) {
+
+        } else if (e.getSource() == back) {
+            setVisible(false);
+            new Login(); // back to login page
+        }
+    }
+
     public static void main(String[] args) {
         new Signup();
     }
+
+
 }
