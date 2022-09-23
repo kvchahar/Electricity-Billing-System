@@ -3,9 +3,10 @@ package electricity.billing.system;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class Project extends JFrame {
+public class Project extends JFrame implements ActionListener {
     public Project() {
         setExtendedState(JFrame.MAXIMIZED_BOTH); // display in fullscreen
 
@@ -33,6 +34,7 @@ public class Project extends JFrame {
         Image scaleIcon1 = icon1.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         newCustomer.setIcon(new ImageIcon(scaleIcon1));
         newCustomer.setMnemonic('D');
+        newCustomer.addActionListener(this);
         newCustomer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
         master.add(newCustomer);
 
@@ -44,6 +46,7 @@ public class Project extends JFrame {
         Image scaleIcon2 = icon2.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         customerDetails.setIcon(new ImageIcon(scaleIcon2));
         customerDetails.setMnemonic('M');
+        customerDetails.addActionListener(this);
         customerDetails.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.CTRL_MASK));
         master.add(customerDetails);
 
@@ -55,6 +58,7 @@ public class Project extends JFrame {
         Image scaleIcon3 = icon3.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         depositDetails.setIcon(new ImageIcon(scaleIcon3));
         depositDetails.setMnemonic('N');
+        depositDetails.addActionListener(this);
         depositDetails.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
         master.add(depositDetails);
 
@@ -66,6 +70,7 @@ public class Project extends JFrame {
         Image scaleIcon4 = icon4.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         calculateBill.setIcon(new ImageIcon(scaleIcon4));
         calculateBill.setMnemonic('B');
+        calculateBill.addActionListener(this);
         calculateBill.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.CTRL_MASK));
         master.add(calculateBill);
 
@@ -94,7 +99,6 @@ public class Project extends JFrame {
         viewInformation.setMnemonic('L');
         viewInformation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK));
         info.add(viewInformation);
-
 
 
         JMenu user = new JMenu("User");
@@ -161,7 +165,6 @@ public class Project extends JFrame {
         utility.add(calculator);
 
 
-
         JMenu menuExit = new JMenu("Exit");
         menuExit.setForeground(Color.RED);
         menuBar.add(menuExit);
@@ -182,7 +185,21 @@ public class Project extends JFrame {
         setVisible(true);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String message = e.getActionCommand();
+        if(message.equals("New Customer")){
+            new NewCustomer();
+        }else if(message.equals("Customer Details")){
+
+        }else if(message.equals("Deposit Details")){
+
+        }else if(message.equals("Calculate Bill")){
+            new CalculateBill();
+        }
+    }
     public static void main(String[] args) {
         new Project();
     }
+
 }
