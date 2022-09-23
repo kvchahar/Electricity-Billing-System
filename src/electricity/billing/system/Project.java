@@ -9,8 +9,10 @@ import java.awt.event.KeyEvent;
 public class Project extends JFrame implements ActionListener {
 
     String userType;
-    public Project(String userType) {
+    String meter_number;
+    public Project(String userType, String meter_number) {
         this.userType = userType;
+        this.meter_number = meter_number;
         setExtendedState(JFrame.MAXIMIZED_BOTH); // display in fullscreen
 
         // image
@@ -98,6 +100,7 @@ public class Project extends JFrame implements ActionListener {
         Image scaleIcon6 = icon6.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         viewInformation.setIcon(new ImageIcon(scaleIcon6));
         viewInformation.setMnemonic('L');
+        viewInformation.addActionListener(this);
         viewInformation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK));
         info.add(viewInformation);
 
@@ -202,10 +205,12 @@ public class Project extends JFrame implements ActionListener {
             new DepositDetails();
         }else if(message.equals("Calculate Bill")){
             new CalculateBill();
+        }else if(message.equals("View Information")){
+            new ViewInformation(meter_number);
         }
     }
     public static void main(String[] args) {
-        new Project("");
+        new Project("","");
     }
 
 }
