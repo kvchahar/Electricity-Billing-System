@@ -143,6 +143,7 @@ public class Project extends JFrame implements ActionListener {
         Image scaleIcon9 = icon9.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         generateBill.setIcon(new ImageIcon(scaleIcon9));
         generateBill.setMnemonic('G');
+        generateBill.addActionListener(this);
         generateBill.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, ActionEvent.CTRL_MASK));
         report.add(generateBill);
 
@@ -235,6 +236,8 @@ public class Project extends JFrame implements ActionListener {
             new Login();
         }else if(message.equals("Pay Bill")){
             new PayBill(meter_number);
+        }else if(message.equals("Generate Bill")){
+            new GenerateBill(meter_number);
         }
     }
 
