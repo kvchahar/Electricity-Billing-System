@@ -48,7 +48,7 @@ public class Project extends JFrame {
         master.add(customerDetails);
 
         // deposit details
-        JMenuItem depositDetails = new JMenuItem("Customer Details");
+        JMenuItem depositDetails = new JMenuItem("Deposit Details");
         depositDetails.setFont(new Font("monospaced", Font.PLAIN, 12));
         depositDetails.setBackground(Color.WHITE);
         ImageIcon icon3 = new ImageIcon(ClassLoader.getSystemResource("icon/icon3.png"));
