@@ -10,6 +10,7 @@ public class Project extends JFrame implements ActionListener {
 
     String userType;
     String meter_number;
+
     public Project(String userType, String meter_number) {
         this.userType = userType;
         this.meter_number = meter_number;
@@ -80,7 +81,7 @@ public class Project extends JFrame implements ActionListener {
 
 
         // information
-        JMenu info = new JMenu("information");
+        JMenu info = new JMenu("Information");
         info.setForeground(Color.RED);
 
         JMenuItem updateInformation = new JMenuItem("Update Information");
@@ -126,6 +127,7 @@ public class Project extends JFrame implements ActionListener {
         Image scaleIcon8 = icon8.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         billDetails.setIcon(new ImageIcon(scaleIcon8));
         billDetails.setMnemonic('I');
+        billDetails.addActionListener(this);
         billDetails.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
         user.add(billDetails);
 
@@ -152,7 +154,8 @@ public class Project extends JFrame implements ActionListener {
         ImageIcon icon10 = new ImageIcon(ClassLoader.getSystemResource("icon/icon12.png"));
         Image scaleIcon10 = icon10.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         notepad.setIcon(new ImageIcon(scaleIcon10));
-        notepad.setMnemonic('S');
+        notepad.setMnemonic('N');
+        notepad.addActionListener(this);
         notepad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         utility.add(notepad);
 
@@ -162,7 +165,8 @@ public class Project extends JFrame implements ActionListener {
         ImageIcon calc = new ImageIcon(ClassLoader.getSystemResource("icon/icon9.png"));
         Image scaleCalc = calc.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         calculator.setIcon(new ImageIcon(scaleCalc));
-        calculator.setMnemonic('S');
+        calculator.setMnemonic('C');
+        calculator.addActionListener(this);
         calculator.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         utility.add(calculator);
 
@@ -176,16 +180,17 @@ public class Project extends JFrame implements ActionListener {
         ImageIcon icon11 = new ImageIcon(ClassLoader.getSystemResource("icon/icon11.png"));
         Image scaleIcon11 = icon11.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         exit.setIcon(new ImageIcon(scaleIcon11));
-        exit.setMnemonic('S');
+        exit.setMnemonic('E');
+        exit.addActionListener(this);
         exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         menuExit.add(exit);
 
-        if(userType.equals("Admin")) {
+        if (userType.equals("Admin")) {
             menuBar.add(master);
-        }else {
-            menuBar.add(report);
-            menuBar.add(user);
+        } else {
             menuBar.add(info);
+            menuBar.add(user);
+            menuBar.add(report);
         }
         menuBar.add(utility);
         menuBar.add(menuExit);
@@ -198,22 +203,40 @@ public class Project extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String message = e.getActionCommand();
-        if(message.equals("New Customer")){
+        if (message.equals("New Customer")) {
             new NewCustomer();
-        }else if(message.equals("Customer Details")){
+        } else if (message.equals("Customer Details")) {
             new CustomerDetails();
-        }else if(message.equals("Deposit Details")){
+        } else if (message.equals("Deposit Details")) {
             new DepositDetails();
-        }else if(message.equals("Calculate Bill")){
+        } else if (message.equals("Calculate Bill")) {
             new CalculateBill();
-        }else if(message.equals("View Information")){
+        } else if (message.equals("View Information")) {
             new ViewInformation(meter_number);
-        }else if(message.equals("Update Information")){
+        } else if (message.equals("Update Information")) {
             new UpdateInformation(meter_number);
+        } else if (message.equals("Bill Details")) {
+            new BillDetails(meter_number);
+        } else if (message.equals("Notepad")) {
+            try {
+                Runtime.getRuntime().exec("notepad.exe");
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        } else if (message.equals("Calculator")) {
+            try {
+                Runtime.getRuntime().exec("calc.exe");
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        } else if (message.equals("exit")) {
+            setVisible(false);
+            new Login();
         }
     }
+
     public static void main(String[] args) {
-        new Project("","");
+        new Project("", "");
     }
 
 }
