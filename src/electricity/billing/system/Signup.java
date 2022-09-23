@@ -6,8 +6,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.sql.ResultSet;
 
 public class Signup extends JFrame implements ActionListener {
 
@@ -48,10 +48,12 @@ public class Signup extends JFrame implements ActionListener {
         meterNumber.setBounds(100, 90, 140, 20);
         meterNumber.setForeground(Color.GRAY);
         meterNumber.setFont(new Font("Tahoma", Font.BOLD, 15));
+        meterNumber.setVisible(false); // when type is admin, it sets to be false.
         panel.add(meterNumber); // add on panel
 
         meter = new JTextField();
         meter.setBounds(260, 90, 150, 20);
+        meter.setVisible(false); // not showing in case of type is admin
         panel.add(meter);
 
         // username
@@ -75,8 +77,25 @@ public class Signup extends JFrame implements ActionListener {
         nameTextField = new JTextField();
         nameTextField.setBounds(260, 170, 150, 20);
         panel.add(nameTextField);
-        setVisible(true);
 
+        meter.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override // focused when we enter meter number, name will automatically be displayed in name field.
+            public void focusLost(FocusEvent fe) {
+                try {
+                    Conn con = new Conn();
+                    ResultSet resultSet = con.statement.executeQuery("select * from login where meter_no = '" + meter.getText() + "'");
+                    while (resultSet.next()) {
+                        nameTextField.setText(resultSet.getString("name"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         // Password
         JLabel password = new JLabel("Password");
@@ -88,6 +107,22 @@ public class Signup extends JFrame implements ActionListener {
         passwordTextField = new JTextField();
         passwordTextField.setBounds(260, 210, 150, 20);
         panel.add(passwordTextField);
+
+        accountType.addItemListener(new ItemListener() {
+            @Override // used to visible the meter number if user type is customer
+            public void itemStateChanged(ItemEvent e) {
+                String user = accountType.getSelectedItem();
+                if (user.equals("Customer")) {
+                    meterNumber.setVisible(true);
+                    meter.setVisible(true);
+                    nameTextField.setEditable(false); // cannot edit the value in case of customer
+                } else {
+                    meterNumber.setVisible(false);
+                    meter.setVisible(false);
+                    nameTextField.setEditable(true);
+                }
+            }
+        });
 
         create = new JButton("Create");
         create.setBackground(Color.BLACK);
@@ -125,7 +160,12 @@ public class Signup extends JFrame implements ActionListener {
 
             try {
                 Conn con = new Conn();
-                String query = "INSERT INTO login VALUES('" + meterField + "','" + username + "','" + name + "','" + password + "','" + accType + "')";
+                String query = null;
+                if (accType.equals("Admin")) {
+                    query = "INSERT INTO login VALUES('" + meterField + "','" + username + "','" + name + "','" + password + "','" + accType + "')";
+                } else {
+                    query = "update login set username = '" + username + "', password = '" + password + "', user = '" + accType + "' where meter_no = '" + meterField + "'";
+                }
                 con.statement.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Account Created Successfully \nClick Ok to go to login page");
                 setVisible(false);
