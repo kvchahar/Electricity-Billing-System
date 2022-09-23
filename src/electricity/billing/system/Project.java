@@ -188,16 +188,17 @@ public class Project extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String message = e.getActionCommand();
-        if(message.equals("New Customer")){
+        if (message.equals("New Customer")) {
             new NewCustomer();
-        }else if(message.equals("Customer Details")){
-
-        }else if(message.equals("Deposit Details")){
-
-        }else if(message.equals("Calculate Bill")){
+        } else if (message.equals("Customer Details")) {
+            new CustomerDetails();
+        } else if (message.equals("Deposit Details")) {
+            new DepositDetails();
+        } else if (message.equals("Calculate Bill")) {
             new CalculateBill();
         }
     }
+
     public static void main(String[] args) {
         new Project();
     }
