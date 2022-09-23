@@ -117,6 +117,7 @@ public class Project extends JFrame implements ActionListener {
         Image scaleIcon7 = icon7.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         payBill.setIcon(new ImageIcon(scaleIcon7));
         payBill.setMnemonic('K');
+        payBill.addActionListener(this);
         payBill.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, ActionEvent.CTRL_MASK));
         user.add(payBill);
 
@@ -232,6 +233,8 @@ public class Project extends JFrame implements ActionListener {
         } else if (message.equals("exit")) {
             setVisible(false);
             new Login();
+        }else if(message.equals("Pay Bill")){
+            new PayBill(meter_number);
         }
     }
 
